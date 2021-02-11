@@ -1,49 +1,72 @@
- body{
-    padding: 0;
-    margin: 0;
-    /* background-image: url("img/background.png"); */
+body {
+  padding: 0;
+  margin: 0;
+  /* background-image: url("img/background.png"); */
 }
-.heading{
-    font-family: 'Francois One', sans-serif;
+.heading {
+  font-family: "Francois One", sans-serif;
 }
-#web-page{
-    background-position: center;
-    height: 100vh;
-    background-size: cover;
+#web-page {
+  background-position: center;
+  height: 100vh;
+  background-size: cover;
 }
- #fullname,#email,#password{
-    width: 90%;
-    height: 45px;
-    border-radius: 50px;
-    padding: 15px;
-    outline: none;
-     border: none; 
-} 
-
-#password-box{
-    position: relative;
+#fullname,
+#email,
+#password {
+  width: 90%;
+  height: 45px;
+  border-radius: 50px;
+  padding: 15px;
+  outline: none;
+  border: none;
 }
 
-.show-icon,.email-icon{
-    position: absolute;
-    z-index: 1;
-    right: 9%;
-    margin-top: 13px;
-    color: #cccccc;
-    cursor: pointer;
-}
-.show-icon{
-    position: absolute;
-    z-index: 1;
-    right: 12%;
-    margin-top: 13px;
-    color: #cccccc;
-    cursor: pointer;
+#password-box {
+  position: relative;
 }
 
-#code{
-    outline: none;
-    border-radius: 5px;
-    border: none;
+.show-icon,
+.email-icon {
+  position: absolute;
+  z-index: 1;
+  right: 9%;
+  margin-top: 13px;
+  color: #cccccc;
+  cursor: pointer;
 }
-
+.show-icon {
+  position: absolute;
+  z-index: 1;
+  right: 12%;
+  margin-top: 13px;
+  color: #cccccc;
+  cursor: pointer;
+}
+.login-show-icon {
+  position: absolute;
+  z-index: 1;
+  right: 15%;
+  margin-top: 13px;
+  color: #cccccc;
+  cursor: pointer;
+}
+#code {
+  outline: none;
+  border-radius: 5px;
+  border: none;
+}
+#login-code{
+  outline: none;
+  border-radius: 5px;
+  border: none;
+}
+#login-email,
+#login-password {
+  width: 90%;
+  height: 45px;
+  border-radius: 50px;
+  padding: 15px;
+  outline: none;
+  border: none;
+}
