@@ -26,18 +26,49 @@
     <script src="js/ajax_user_check.js"></script>
     <script src="js/ajax_user_signup.js"></script>
     <script src="js/ajax_activate.js"></script>
+    <script src="js/ajax_login.js"></script>
    
   </head>
   <body>
       <div class="container-fluid" id="web-page" style="background-image: url('img/background.png');">
             <div class="row">
-              <div class="col-md-4"></div>
-              <div class="col-md-4 p-4">
-                <img src="img/main_pic.jpg" alt="main_pic" class="shadow-lg">
+
+            <!-- ==================log-in column======================= -->
+              <div class="col-md-4 py-4">
+                      <h3 class="ml-4 p-4">LOGIN</h3>
+                      <form autocomplete="off" id="login_form">
+                      <div class="email-box">
+                        <input type="email" name="email" id="login-email" placeholder="username" required="required">
+                        </div>
+                        <br>
+                        <div class="password-box">
+                        <input type="password" id="login-password" placeholder="username" required="required">
+                          <i class="fa fa-eye login-show-icon" style="font-size:18px;"></i>
+                        </div>
+                        <br>
+                        <button class=" btn btn-dark login-submit-btn" type="submit">login now</button>
+                        <br>
+                        
+                        <div class="login-notice p-2" >
+                          
+                        </div>
+                      </form>
+                      <!--========= login activator box ===========-->
+                      <div class="px-2 login-activator">
+                        <span>Please check your email to get activation code</span>
+                        <br>
+                        <input type="text" placeholder="Activation code" class="py-2 p-2" id="login-code">
+                        <button class="btn btn-dark login-active-btn">Active now</button>
+                      </div>
               </div>
-              <div class="col-md4 p-2">
+              <!--=============== image column =============== -->
+              <div class="col-md-4 p-4">
+                <img src="img/main_pic.jpg" alt="main_pic" class="shadow-lg w-100">
+              </div>
+              <!-- ============================sign-up column==================== -->
+              <div class="col-md4 px-4 p-4">
               <h3 class="ml-2 p-3" class="heading">SIGN UP</h3>
-              <form autocomplete="off">
+              <form autocomplete="off" id="signup-form">
                 <input type="text" name="fullname" id="fullname" placeholder="Enter your name" required="required">
                   <br><br>
 
@@ -52,9 +83,6 @@
                 <input type="text" id="password" name="password" placeholder="password" required="required">
                 <i class="fa fa-eye show-icon"></i>
                 </div>
-
-
-
                 <br>
                 
                 <button class="btn float-left py-2">CLICK GENERATE To IMPROVED SECURITY </button>
@@ -68,7 +96,8 @@
               </form>
               <br>
               <br>
-              <div class="px-2 activator ">
+              <!--================= activation code===================== -->
+              <div class="px-2 activator d-none">
               <span>check your email to get activation code</span>
               <br><br>
               <input type="text" name="code" id="code" class="py-2 p-2" placeholder="activation-code">
