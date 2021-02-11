@@ -1,6 +1,6 @@
 <?php
     require("database.php");
-    $fullname = base64_decode($_POST['fulname']);
+    $fullname = base64_decode($_POST['fullname']);
     $username = base64_decode($_POST['username']);
     $password = md5($_POST['password']);
 
@@ -26,7 +26,7 @@
                 else{
                     echo "sending failed";
                 }
-            }
+        }
          else{
              echo "sign up failed";
          }
