@@ -22,13 +22,13 @@
                 $response_get_code = $db->query($get_code);
                 $data = $response_get_code->fetch_assoc();
                 $final_code = $data['activation_code'];
-                $check_code_mail =  mail($username,"picdrive activation code","thanks for choosing our product your activation code is : ".$final_code);
+                $check_code_mail =  mail($username,"pic-drive activation code","thanks for choosing our product your activation code is : ".$final_code);
                 if($check_code_mail == true)
                 {
                     echo "login pending";
                 }
                 else{
-                    
+
                 }
             }
         }

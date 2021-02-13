@@ -42,19 +42,18 @@
                         </div>
                         <br>
                         <div class="password-box">
-                        <input type="password" id="login-password" placeholder="username" required="required">
+                        <input type="password" name="password" id="login-password" placeholder="password" required="required">
                           <i class="fa fa-eye login-show-icon" style="font-size:18px;"></i>
                         </div>
                         <br>
                         <button class=" btn btn-dark login-submit-btn" type="submit">login now</button>
                         <br>
-                        
-                        <div class="login-notice p-2" >
-                          
-                        </div>
                       </form>
+                      <div class="login-notice p-2">
+                          
+                          </div>
                       <!--========= login activator box ===========-->
-                      <div class="px-2 login-activator">
+                      <div class="px-2 login-activator d-none">
                         <span>Please check your email to get activation code</span>
                         <br>
                         <input type="text" placeholder="Activation code" class="py-2 p-2" id="login-code">

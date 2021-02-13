@@ -15,7 +15,72 @@ $(document).ready(function () {
                 $(".login-submit-btn").attr("disabled", "disabled");
             },
             success: function (response) {
-                alert(response);
+                //alert(response);
+                if (response.trim() == "login success") {
+                    window.location = "profile/profile.php";
+                }
+                else if (response.trim() == "activation pending") {
+                    $("#login_form").fadeOut(500, function () {
+                        $(".login-activator").removeClass("d-none");
+                        $(".login-active-btn").click(function () {
+                            $.ajax({
+                                type: "POST",
+                                url: "php/activator.php",
+                                data: {
+                                    code: btoa($("#login-code").val()),
+                                    username: btoa($("#login-email").val())
+                                },
+                                beforeSend: function () {
+                                    $(".login-active-btn").html("Please wait we are checking.....");
+                                    $(".login-active-btn").attr("disable", "disable");
+                                },
+                                success: function (response) {
+                                    if (response.trim() == "user verified") {
+                                        window.location = "profile/profile.phe";
+                                    }
+                                    else {
+                                        $(".login-active-btn").html("Activate now");
+                                        $(".login-active-btn").removeAttr("disable");
+                                        $("#login-code").val("");
+                                        var notice = document.createElement("DIV");
+                                        notice.className = "alert alert-warning";
+                                        notice.innerHTML = "<b>Wrong activation code</b>";
+                                        $(".login-notice").append(notice);
+                                        setTimeout(function(){
+                                            $(".login-notice").html("");
+                                        },5000);
+                                    }
+                                }
+                            });
+                        });
+                    });
+                }
+                else if (response.trim() == "wrong password") {
+                    var message = document.createElement("DIV");
+                    message.className = "alert alert-warning";
+                    message.innerHTML = "<b>Wrong password</b>";
+                    $(".login-notice").append(message);
+                    $("#login-form").trigger('reset');
+                    $(".login-submit-btn").html("Login now");
+                    $(".login-submit-btn").removeAttr("disable");
+                    setTimeout(function () {
+                        $(".login-notice").html("");
+                    }, 6000);
+                }
+
+                else {
+                    var message = document.createElement("DIV");
+                    message.className = "alert alert-warning";
+                    message.innerHTML = "<b>User not found please sign up</b>";
+                    $(".login-notice").append(message);
+                    $("#login-form").trigger('reset');
+                    $(".login-submit-btn").html("Login now");
+                    $(".login-submit-btn").removeAttr("disable");
+                    setTimeout(function () {
+                        $(".login-notice").html("");
+                    }, 2000);
+                }
+
             }
         });
     });

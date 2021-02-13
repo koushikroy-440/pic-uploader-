@@ -13,7 +13,21 @@ $(document).ready(function () {
                 $(".activation-btn").html("please wait we are checking...");
             },
             success: function (response) {
-                alert(response);
+                if (response.trim() == "user verified") {
+                    window.location = "profile/profile.phe";
+                }
+                else {
+                    $(".login-active-btn").html("Activate now");
+                    $(".login-active-btn").removeAttr("disable");
+                    $("#login-code").val("");
+                    var notice = document.createElement("DIV");
+                    notice.className = "alert alert-warning";
+                    notice.innerHTML = "<b>Wrong activation code</b>";
+                    $(".login-notice").append(notice);
+                    setTimeout(function () {
+                        $(".login-notice").html("");
+                    }, 5000);
+                }
             }
         });
     });
