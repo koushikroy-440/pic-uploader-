@@ -1,17 +1,16 @@
-$(document).ready(function(){
-    $(".show-icon").click(function(){
-        if($("#password").attr("type") == "password")
-        {
+$(document).ready(function () {
+    $(".show-icon").click(function () {
+        if ($("#password").attr("type") == "password") {
             $(this).css({
                 color: "black"
             });
-            $("#password").attr("type","text");
+            $("#password").attr("type", "text");
         }
-        else{
+        else {
             $(this).css({
                 color: "#ccc"
             });
-            $("#password").attr("type","password");
+            $("#password").attr("type", "password");
         }
     });
 });
