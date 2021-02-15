@@ -56,7 +56,7 @@
                       <div class="px-2 login-activator d-none">
                         <span>Please check your email to get activation code</span>
                         <br>
-                        <input type="text" placeholder="Activation code" class="py-2 p-2" id="login-code">
+                        <input type="text" name="code" placeholder="Activation code" class="py-2 p-2" id="login-code">
                         <button class="btn btn-dark login-active-btn">Active now</button>
                       </div>
               </div>
