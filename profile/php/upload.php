@@ -1,16 +1,19 @@
 <?php
- if($_SERVER['REQUEST_METHOD'] == "POST")
- {
-    $uploaded_file =  $_FILES['data'];
-    echo $uploaded_file["name"];
-    echo "<br>";
-    echo $upload_file["type"];
-    echo "<br>";
-    echo $upload_file["tmp_name"];
-    echo "<br>";
-    echo $upload_file["error"];
+   require "../../php/database.php";
+session_start();
+$username = $_SESSION["username"];
+$get_id = "SELECT id FROM users WHERE username = '$username'";
+$get_response = $db->query($get_id);
+$data = $get_response->fetch_assoc();
+$folder_name = "../gallery/user_" . $data['id']."/";
 
- }
+
+$file = $_FILES['data'];
+$user_path = $file['tmp_name'];
+$file_name = $file['name'];
+move_uploaded_file($user_path,$folder_name.$file_name);
+echo "success";
+
 
 
 

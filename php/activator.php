@@ -22,6 +22,7 @@ if ($response->num_rows != 0) {
         )";
         if($db->query($create_table))
         {
+            mkdir("../profile/gallery/".$table_name);
             echo "user verified";
             session_start();
             $_SESSION['username'] = $username;
