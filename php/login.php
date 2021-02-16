@@ -14,7 +14,11 @@ if ($response->num_rows != 0) {
         $check_status = "SELECT status FROM users WHERE username = '$username' AND password = '$password' and status = 'active'";
         $response_status = $db->query($check_status);
         if ($response_status->num_rows != 0) {
+
             echo "login success";
+            session_start();
+            $_SESSION['username'] = $username;
+
         } else {
             // echo "activation pending";
             $get_code = "SELECT activation_code FROM users WHERE username = '$username ' AND password = '$password'";

@@ -1,6 +1,9 @@
 <?php
 session_start();
-echo $_SESSION['username'];
+if (empty($_SESSION['username'])) {
+    header("Location:../index.php");
+    exit;
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,12 +19,20 @@ echo $_SESSION['username'];
   <body style="background:#FCD0CF">
      <nav class="navbar navbar-expand-md bg-dark navbar-dark">
         <a href="#" class="navbar-brand">
-          mr roy
+            <?php
+require "../php/database.php";
+$email = $_SESSION['username'];
+echo $email;
+// $get_name = "SELECT full_name FORM users WHERE username ='$email' ";
+// $response = $db->query($get_name);
+// $name = $response->fetch_assoc();
+// echo $name['full_name'];
+?>
         </a>
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link" href="php/logout.php">
               <i class="fa fa-sign-out" style="font-size:18px"></i>
               Logout
             </a>
