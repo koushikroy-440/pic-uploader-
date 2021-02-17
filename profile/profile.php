@@ -1,5 +1,6 @@
 <?php
 session_start();
+$username = $_SESSION['username'];
 if (empty($_SESSION['username'])) {
     header("Location:../index.php");
     exit;
@@ -43,14 +44,48 @@ echo $email;
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3 p-5 border">
-                      <div class="d-flex flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
+                      <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
                            <i class="fa fa-folder-open upload-icon" style="font-size:80px;cursor:pointer;"></i>
                                  <h4>UPLOAD FILES</h4>
                                         <span>free space : 10MB</span>
                                                 <div class="progress w-50 my-2" style="height:10px">
                                                       <div class="progress-bar progress-bar-animated progress-bar-striped w-50"></div>
                                                 </div>
+              <div>
+              <span>50%</span>
+            <i class="fa fa-pause-circle" aria-hidden="true"></i>
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+            </div>
+                </div>
 
+                <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
+                           <i class="fa fa-database" style="font-size:80px;cursor:pointer;"></i>
+                                 <h4>MEMORY STATUS</h4>
+                                        <span>
+                                        <?php
+                                          $get_status = "SELECT storage,used_storage FROM users WHERE username = '$username'";
+                                          $response = $db->query($get_status);
+                                          $data = $response->fetch_assoc();
+                                          $total = $data['storage'];
+                                          $used =  $data['used_storage'];
+                                          echo $used."MB/".$total."MB";
+                                          $percentage =round(($used*100)/$total,2);
+                                          $color = "";
+                                          if($percentage>80)
+                                          {
+                                            $color = "bg-danger";
+                                          }
+                                          else{
+                                            $color = "bg-primary";
+                                          }
+
+                                          ?>
+                                        </span>
+                                                <div class="progress w-50 my-2" style="height:10px">
+                                                      <div class="progress-bar <?php echo $color ?>" style="width: <?php
+                                                        echo $percentage,'%';
+                                                      ?>"></div>
+                                                </div>
               <div>
               <span>50%</span>
             <i class="fa fa-pause-circle" aria-hidden="true"></i>
@@ -59,7 +94,32 @@ echo $email;
                 </div>
              </div>
             <div class="col-md-6 p-5 border"></div>
-                <div class="col-md-3 p-5 border"></div>
+                <div class="col-md-3 p-5 border">
+                <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
+                <a href="gallery.php" class="text-black">
+                           <i class="fa fa-image " style="font-size:80px;cursor:pointer;"></i>
+                           </a>
+                           <h4>GALLERY</h4>
+                           <span>
+                           <?php
+                              $get_id = "SELECT id FROM users WHERE username = '$username'";
+                              $response = $db->query($get_id);
+                              $data = $response->fetch_assoc();
+                              $table_name = "user_".$data['id'];
+                              $count_photo = "SELECT count(id) AS total FROM $table_name";
+                              $response = $db->query($count_photo);
+                              $data = $response->fetch_assoc();
+                              echo $data['total']." PHOTOS";
+
+                              $_SESSION['table_name'] = $table_name;
+                           ?>
+                           </span>
+                                 
+              <div>
+              
+            </div>
+                
+                </div>
           </div>
         </div>
     <!-- Optional JavaScript -->
