@@ -47,40 +47,51 @@ echo $email;
                       <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
                            <i class="fa fa-folder-open upload-icon" style="font-size:80px;cursor:pointer;"></i>
                                  <h4 class="upload-header">UPLOAD FILES</h4>
-                                        <span class="free-space"> 
-                                        <?php
+                                        <span class="free-space">
+                                                    <?php
 
-$get_status = "SELECT storage,used_storage FROM users WHERE username = '$username'";
+$get_status = "SELECT plans,storage,used_storage FROM users WHERE username = '$username'";
 $response = $db->query($get_status);
 $data = $response->fetch_assoc();
 $total = $data['storage'];
 $used = $data['used_storage'];
-$free_space = $total-$used;
-echo "FREE SPACE : ".$free_space ." MB";
+$plans = $data['plans'];
+if($plans == "starter")
+{
+  $free_space = $total - $used;
+echo "FREE SPACE : " . $free_space . " MB";
+}
+else{
+  echo "FREE SPACE : UNLIMITED" ;
+}
 
 ?>
                                         </span>
                                                 <div class="progress upload-progress-con d-none w-50 my-2" style="height:10px">
                                                       <div class="progress-bar progress-control progress-bar-animated progress-bar-striped "></div>
                                                 </div>
-              <div class="progress-details d-none">
-              <span class="progress-percentage"></span>
-            <i class="fa fa-pause-circle" aria-hidden="true"></i>
-            <i class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
+                                                  <div class="progress-details d-none">
+                                                  <span class="progress-percentage"></span>
+                                                <i class="fa fa-pause-circle" aria-hidden="true"></i>
+                                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                                </div>
                 </div>
 
                 <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
                            <i class="fa fa-database" style="font-size:80px;cursor:pointer;"></i>
                                  <h4>MEMORY STATUS</h4>
                                         <span class="memory-status">
-                                        <?php
-$get_status = "SELECT storage,used_storage FROM users WHERE username = '$username'";
+                                                      <?php
+$get_status = "SELECT plans,storage,used_storage FROM users WHERE username = '$username'";
 $response = $db->query($get_status);
 $data = $response->fetch_assoc();
 $total = $data['storage'];
 $used = $data['used_storage'];
-echo $used . "MB/" . $total . "MB";
+$plans = $data['plans'];
+if($plans == "starter")
+{
+  $display = "d-block";
+  echo $used . "MB/" . $total . "MB";
 $percentage = round(($used * 100) / $total, 2);
 $color = "";
 if ($percentage > 80) {
@@ -88,26 +99,35 @@ if ($percentage > 80) {
 } else {
     $color = "bg-primary";
 }
+}
+else{
+    $display = "d-none";
+    echo "used storage : ".$used."MB";
+  
+}
 
 ?>
                                         </span>
-                                                <div class="progress w-50 my-2" style="height:10px">
-                                                      <div class="progress-bar memory-progress <?php echo $color ?>" style="width: <?php
+                                                <div class="progress w-50 my-2 <?php echo $display ?>" style="height:10px">
+                                                          <div class="progress-bar memory-progress <?php echo $color ?>" style="width: <?php
 echo $percentage, '%';
-?>"></div>
+?>">
+
+                                                          </div>
                                                 </div>
-              <div>
-              <span>50%</span>
-            <i class="fa fa-pause-circle" aria-hidden="true"></i>
-            <i class="fa fa-times-circle" aria-hidden="true"></i>
-            </div>
+                                                <div>
+                                                <span>50%</span>
+                                              <i class="fa fa-pause-circle" aria-hidden="true"></i>
+                                              <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                                 </div>
                 </div>
              </div>
 
             <div class="col-md-6 p-5 border"></div>
+
                 <div class="col-md-3 p-5 border">
                 <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
-                <a href="gallery.php" class="text-black">
+                    <a href="gallery.php" class="text-black">
                            <i class="fa fa-image " style="font-size:80px;cursor:pointer;"></i>
                            </a>
                            <h4>GALLERY</h4>
@@ -119,39 +139,47 @@ $data = $response->fetch_assoc();
 $table_name = "user_" . $data['id'];
 $count_photo = "SELECT count(id) AS total FROM $table_name";
 $response = $db->query($count_photo);
-if($response)
-{
-  $data = $response->fetch_assoc();
-  echo $data['total'] . " PHOTOS";
-  
-  $_SESSION['table_name'] = $table_name;
-}
-else{
-  echo  "0 PHOTOS";
+if ($response) {
+    $data = $response->fetch_assoc();
+    echo $data['total'] . " PHOTOS";
+
+    $_SESSION['table_name'] = $table_name;
+} else {
+    echo "0 PHOTOS";
 }
 
 ?>
                            </span>
 
+
               <div>
 
-
+              
 
             </div>
-            
+
 
                 </div>
-                <!-- ******************************** -->
-                <div class="col-md-3 p-5 border">
-                <div class="d-flex mb-5 flex-column justify-content-center">
-                <a href="shop.php" class="text-black">
-                           <i class="fa fa-shopping-cart" style="font-size:80px;cursor:pointer;"></i>
+                <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
+                    <a href="shop.php" class="text-black">
+                           <i class="fa fa-shopping-cart mb-1" style="font-size:80px;cursor:pointer;"></i>
                            </a>
-                           <h4>GALLERY</h4>
-                          
+                           <h4>BUY MEMORY</h4>
+                           <span>
+                              STARTING FROM $99/month
+                           </span>
+
 
               <div>
-                <!-- **************************************************************** -->
+
+              
+
+            </div>
+
+
+                </div>
+
+
           </div>
         </div>
     <!-- Optional JavaScript -->
@@ -163,3 +191,9 @@ else{
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </body>
 </html>
+<!-- close user connection -->
+<?php
+
+$db->close();
+
+?>

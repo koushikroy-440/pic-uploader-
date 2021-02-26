@@ -26,3 +26,11 @@ if (file_exists("../" . $dirname . "/" . $new_name . "." . $extension)) {
     }
     //echo "success from rename.php";
 }
+
+?>
+<!-- close user connection -->
+<?php
+
+$db->close();
+
+?>

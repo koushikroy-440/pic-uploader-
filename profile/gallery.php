@@ -120,3 +120,10 @@ while ($data = $response->fetch_assoc()) {
     </script>
   </body>
 </html>
+
+<!-- close user connection -->
+<?php
+
+$db->close();
+
+?>

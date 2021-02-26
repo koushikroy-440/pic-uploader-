@@ -22,3 +22,10 @@ if ($percentage > 80) {
 }
 
 ?>
+
+<!-- close user connection -->
+<?php
+
+$db->close();
+
+?>

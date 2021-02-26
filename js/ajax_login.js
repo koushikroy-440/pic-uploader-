@@ -10,6 +10,7 @@ $(document).ready(function () {
                 username: username,
                 password: password
             },
+            cache: false,
             beforeSend: function () {
                 $(".login-submit-btn").html("processing");
                 $(".login-submit-btn").attr("disabled", "disabled");
@@ -30,6 +31,7 @@ $(document).ready(function () {
                                     code: btoa($("#login-code").val()),
                                     username: username
                                 },
+                                cache: false,
                                 beforeSend: function () {
                                     $(".login-active-btn").html("Please wait we are checking.....");
                                     $(".login-active-btn").attr("disabled", "disabled");

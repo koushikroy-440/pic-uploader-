@@ -41,3 +41,11 @@ else {
     echo "wrong activation code";
     // alert(response);
 }
+
+?>
+
+<?php
+
+$db->close();
+
+?>

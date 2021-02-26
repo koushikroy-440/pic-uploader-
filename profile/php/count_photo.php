@@ -14,3 +14,10 @@ echo $data['total'] . " PHOTOS";
 
 $_SESSION['table_name'] = $table_name;
 ?>
+
+<!-- close user connection -->
+<?php
+
+$db->close();
+
+?>

@@ -9,6 +9,7 @@ $(document).ready(function () {
                 code: code,
                 username: username
             },
+            cache: false,
             beforeSend: function () {
                 $(".activation-btn").html("please wait we are checking...");
             },

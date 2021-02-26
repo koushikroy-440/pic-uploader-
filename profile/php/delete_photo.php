@@ -39,3 +39,10 @@ if (unlink("../" . $path)) {
 } else {
     echo "delete failed";
 }
+?>
+<!-- close user connection -->
+<?php
+
+$db->close();
+
+?>

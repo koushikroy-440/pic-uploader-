@@ -27,3 +27,11 @@ if ($db->query($store_user)) {
 } else {
     echo "sign up failed";
 }
+?>
+
+<!-- close user connection -->
+<?php
+
+$db->close();
+
+?>

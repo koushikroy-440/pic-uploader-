@@ -24,6 +24,7 @@ $(document).ready(function () {
                         photo_name: photo_name,
                         photo_path: image_path
                     },
+                    cache: false,
                     beforeSend: function () {
                         $(loader).removeClass("d-none");
                         $(save_icon).addClass("d-none");
@@ -48,6 +49,10 @@ $(document).ready(function () {
                             footer.getElementsByClassName("download-icon")[0].setAttribute("data-location", current_download_link);
                             footer.getElementsByClassName("download-icon")[0].setAttribute("file-name", photo_name);
                             footer.getElementsByClassName("download-icon")[0].setAttribute("data-location",current_download_link);
+                            footer.getElementsByClassName("edit-icon")[0].setAttribute("data-location", current_download_link);
+                            footer.getElementsByClassName("edit-icon")[0].setAttribute("file-name", photo_name);
+                            footer.getElementsByClassName("edit-icon")[0].setAttribute("data-location",current_download_link);
+                            
                         }
                     }
                 });
@@ -86,6 +91,7 @@ $(document).ready(function () {
                 data: {
                     photo_path: $(this).attr("data-locations"),
                 },
+                cache: false,
                 beforeSend: function () {
                     $(this).removeClass("fa fa-trash");
                     $(this).addClass("fa fa-spinner fa-spin");

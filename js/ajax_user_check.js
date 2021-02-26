@@ -7,6 +7,7 @@ $(document).ready(function () {
                 data: {
                     username: btoa($(this).val())
                 },
+                cache: false,
                 beforeSend: function () {
                     $(".email-icon").removeClass("d-none");
                 },

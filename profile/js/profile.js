@@ -10,6 +10,7 @@
              var file = new FormData();
              file.append("data",this.files[0]);
              $.ajax({
+                 cache: false,
                  type : "POST",
                  url :"php/upload.php",
                  data : file,
@@ -44,6 +45,7 @@
                         $.ajax({
                             type : "POST",
                             url :"php/count_photo.php",
+                            cache: false,
                             beforeSend :function () {
                                 $(".count-photo").html("processing...");
                             },
@@ -56,6 +58,7 @@
                         $.ajax({
                             type : "POST",
                             url :"php/memory.php",
+                            cache: false,
                             beforeSend :function () {
                                 $(".memory-status").html("updating......");
                                 $(".free-space").html("updating......");

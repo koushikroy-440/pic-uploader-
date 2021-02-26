@@ -9,6 +9,7 @@ $(document).ready(function () {
                 username: btoa($("#email").val()),
                 password: btoa($("#password").val())
             },
+            cache: false,
             beforeSend: function () {
                 $(".submit-btn").html("processing please wait.... ");
                 $(".submit-btn").attr("disabled", "disabled");
