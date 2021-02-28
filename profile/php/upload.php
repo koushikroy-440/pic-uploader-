@@ -118,9 +118,3 @@ else{
 
 ?>
 
-<!-- close user connection -->
-<?php
-
-$db->close();
-
-?>

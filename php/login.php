@@ -39,9 +39,3 @@ if ($response->num_rows != 0) {
     echo "user not found";
 }
 ?>
-<!-- close user connection -->
-<?php
-
-$db->close();
-
-?>

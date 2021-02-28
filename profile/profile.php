@@ -33,7 +33,7 @@ echo $email;
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="#" class="nav-link" href="php/logout.php">
+            <a href="php/logout.php" class="nav-link" href="php/logout.php">
               <i class="fa fa-sign-out" style="font-size:18px"></i>
               Logout
             </a>
@@ -41,6 +41,7 @@ echo $email;
         </ul>
      </nav>
      <br>
+     <div class="upload-notice fixed-top"></div>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-3 p-5 border">
@@ -88,7 +89,7 @@ $data = $response->fetch_assoc();
 $total = $data['storage'];
 $used = $data['used_storage'];
 $plans = $data['plans'];
-if($plans == "starter")
+if($plans == "starter" || $plans == "free")
 {
   $display = "d-block";
   echo $used . "MB/" . $total . "MB";
@@ -111,9 +112,12 @@ else{
                                                 <div class="progress w-50 my-2 <?php echo $display ?>" style="height:10px">
                                                           <div class="progress-bar memory-progress <?php echo $color ?>" style="width: <?php
 echo $percentage, '%';
-?>">
+?>"> 
+<?php
+    echo $percentage;
+?>
 
-                                                          </div>
+ </div>
                                                 </div>
                                                 <div>
                                                 <span>50%</span>
@@ -127,7 +131,7 @@ echo $percentage, '%';
 
                 <div class="col-md-3 p-5 border">
                 <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
-                    <a href="gallery.php" class="text-black">
+                    <a href="gallery.php" class="image-link text-black">
                            <i class="fa fa-image " style="font-size:80px;cursor:pointer;"></i>
                            </a>
                            <h4>GALLERY</h4>
@@ -161,7 +165,7 @@ if ($response) {
 
                 </div>
                 <div class="d-flex mb-5 flex-column justify-content-center align-items-center w-100 bg-white rounded-lg shadow-lg" style="height:250px">
-                    <a href="shop.php" class="text-black">
+                    <a href="shop.php" class="text-black memory-link">
                            <i class="fa fa-shopping-cart mb-1" style="font-size:80px;cursor:pointer;"></i>
                            </a>
                            <h4>BUY MEMORY</h4>
@@ -191,9 +195,65 @@ if ($response) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   </body>
 </html>
-<!-- close user connection -->
 <?php
+$current_date = date('Y-m-d');
+$get_expiry_date = "SELECT plans,expiry_date,full_name FROM users WHERE username = '$username'";
+$response = $db->query($get_expiry_date);
+$data = $response->fetch_assoc();
 
-$db->close();
+$plans = $data['plans'];
+if($plans != "free"){
+$expiry_date = $data['expiry_date'];
+
+$cal_date = new DateTime($expiry_date);
+$cal_date->sub(new DateInterval('P5D'));
+$five_date_before = $cal_date->format('Y-m-d H:i:s');
+
+if($current_date == $five_date_before)
+{
+  echo "<div class='alert alert-warning rounded-0 shadow-lg fixed-top py-3'><i class='fa fa-times-circle close' data-dismiss='alert'></i><b>You have only 5 days left to renew your plan.</b></div>";
+}
+else if($current_date > $five_date_before)
+{
+   $manual_expiry_date = $date_create($expiry_date); 
+   $manual_current_date = $date_create($current_date); 
+
+  $date_diff = date_diff($manual_current_date,$manual_expiry_date);
+  $left_days = $date_diff->format('%a');
+  echo "<div class='alert alert-warning rounded-0 shadow-lg fixed-top py-3'><i class='fa fa-times-circle close' data-dismiss='alert'></i><b>You have only ".$left_days." days left to renew your plan.</b></div>";
+  if($current_date>=$expiry_date)
+  {
+    $amount;
+    $storage;
+    if($plans == "starter")
+    {
+      $amount = 99;
+      $storage = 1024;
+    }
+    else{
+      $amount = 500;
+      $storage = 'unlimited';
+    }
+    $renew_link = "php/payment.php?amount=".$amount."&plans=".$plans."&storage=".$storage;
+    $_SESSION['renew'] = 'yes';
+    $_SESSION['buyer_name'] = $data['full_name'];
+    echo "<div class='d-flex alert alert-warning rounded-0 shadow-lg fixed-top py-3'>
+      <h4 class='flex-fill '>plan expire chose an action</h4>
+      <a href='".$renew_link."' class='btn btn-primary mx-3'>Renew old product</a>
+      <a href='shop.php' class='btn btn-primary mr-3 shadow-sm'>Purchase new plan</a>
+      <a href='php/logout.php' class='btn btn-light shadow-lg'>Log out</a>
+    </div>";
+
+    echo "<style>
+      .upload-icon,.memory-link,.image-link{pointer-events:none}
+    </style>";
+  }
+}
+
+
+
+} 
+
+
 
 ?>

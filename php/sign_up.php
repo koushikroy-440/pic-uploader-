@@ -29,9 +29,3 @@ if ($db->query($store_user)) {
 }
 ?>
 
-<!-- close user connection -->
-<?php
-
-$db->close();
-
-?>

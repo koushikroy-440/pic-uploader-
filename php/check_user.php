@@ -11,9 +11,3 @@ if ($response->num_rows != 0) {
 
 ?>
 
-<!-- close user connection -->
-<?php
-
-$db->close();
-
-?>

@@ -164,9 +164,3 @@ $_SESSION['buyer_name'] = $email;
     </script>
   </body>
 </html>
-<!-- close user connection -->
-<?php
-
-$db->close();
-
-?>

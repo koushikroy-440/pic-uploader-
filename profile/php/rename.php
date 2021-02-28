@@ -28,9 +28,3 @@ if (file_exists("../" . $dirname . "/" . $new_name . "." . $extension)) {
 }
 
 ?>
-<!-- close user connection -->
-<?php
-
-$db->close();
-
-?>

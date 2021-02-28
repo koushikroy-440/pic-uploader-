@@ -18,12 +18,12 @@
                  processData : false,
                  cache : false, 
                  xhr : function(){
-                        var request = new XMLHttpRequest();
-                        request.upload.onprogress = function(e){
+                            var request = new XMLHttpRequest();
+                            request.upload.onprogress = function(e){
                             //console.log(e);
                             var loaded = (e.loaded/1024/1024).toFixed(2);
                             var total = (e.loaded/1024/1024).toFixed(2);
-                            var percentage = (loaded*100)/total;
+                            var percentage = ((loaded*100)/total).toFixed(2);
                             $(".progress-control").css({
                                 width : percentage+"%",
                             });
@@ -41,7 +41,42 @@
                      $(".progress-details").removeClass("d-none");
                  },
                  success : function(response){
-                        alert(response);
+                        if(response.trim() == "success"){
+                            var message = document.createElement("DIV");
+                            message.className = "alert py-3 alert-light shadow-lg rounded-0";
+                            message.innerHTML = "<br>"+response+"</br>";
+                            $(".upload-notice").html(message);
+                            setTimeout(function(){
+                               
+                                $(".upload-header").html("UPLOAD FILES");
+                                $(".upload-icon").css({
+                                    opacity : "1",
+                                    pointerEvents : "inherit",
+                                });
+                                $(".upload-progress-con").addClass("d-none");
+                                $(".progress-details").addClass("d-none");
+                                $(".upload-notice").html("");
+                            },3000);
+                           
+
+                        }
+                        else{
+                            var message = document.createElement("DIV");
+                            message.className = "alert py-3 alert-primary shadow-lg rounded-0";
+                            message.innerHTML = "<br>"+response+"</br>";
+                            $(".upload-notice").html(message);
+                            setTimeout(function(){
+                               
+                                $(".upload-header").html("UPLOAD FILES");
+                                $(".upload-icon").css({
+                                    opacity : "1",
+                                    pointerEvents : "inherit",
+                                });
+                                $(".upload-progress-con").addClass("d-none");
+                                $(".progress-details").addClass("d-none");
+                                $(".upload-notice").html("");
+                            },3000);
+                        }
                         $.ajax({
                             type : "POST",
                             url :"php/count_photo.php",

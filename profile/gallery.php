@@ -121,9 +121,3 @@ while ($data = $response->fetch_assoc()) {
   </body>
 </html>
 
-<!-- close user connection -->
-<?php
-
-$db->close();
-
-?>
