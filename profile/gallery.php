@@ -57,37 +57,8 @@ echo $email;
 
      <br>
      <div class="container">
-     <div class="row">
-         <?php
-$table_name = $_SESSION['table_name'];
-$get_image_path = "SELECT * FROM $table_name";
-$response = $db->query($get_image_path);
-while ($data = $response->fetch_assoc()) {
+     <div class="row load-image">
 
-    $image_name = pathinfo($data['image_name']);
-    $image_name = $image_name['filename'];
-    $path = str_replace("../", "", $data['image_path']);
-    // echo "<img src=' ".$path." ' width='50%'>";
-    echo "
-            <div class='col-md-3 mb-3'>
-                    <div class='card shadow-lg'>
-                        <div class='card-body d-flex justify-content-center align-item-center'>
-                            <img src='" . $path . "' width='100' height='150' class='rounded-circle pic'>
-                        </div>
-                        <div class='card-footer d-flex justify-content-around align-item-center'>
-                            <span>" . $image_name . "</span>
-                            <i class='fa fa-save save-icon' aria-hidden='true' data-locations='" . $path . "' style='display: none;cursor:pointer'></i>
-                            <i class='fa fa-spinner d-none fa-spin loader' aria-hidden='true' data-locations='" . $path . "' style='cursor:pointer'></i>
-                            <i class='fa fa-edit edit-icon' aria-hidden='true' data-locations='" . $path . "' style='cursor:pointer'></i>
-                            <i class='fa fa-download download-icon' aria-hidden='true' data-locations='" . $path . "' file-name='" . $image_name . "' style='cursor:pointer'></i>
-                            <i class='fa fa-trash trash-icon delete-icon' aria-hidden='true' data-locations='" . $path . "' style='cursor:pointer'></i>
-                        </div>
-                    </div>
-            </div>
-            ";
-
-}
-?>
         </div>
         </div>
 
@@ -95,9 +66,9 @@ while ($data = $response->fetch_assoc()) {
         <div class="modal-dialog">
         <i class="fa fa-times-circle float-right text-white" aria-hidden="true" data-dismiss="modal"></i>
           <div class="modal-content">
-            
+
             <div class="modal-body">
-              
+
             </div>
           </div>
         </div>
@@ -116,6 +87,40 @@ while ($data = $response->fetch_assoc()) {
 
           });
         });
+    });
+    //load image
+    $(document).ready(function(){
+      var starting_point = 0;
+      var ending_point = 12;
+      load();
+      function load(){
+        $.ajax({
+          type: "POST",
+          url:"load_image.php",
+          cache: false,
+          data:{
+            start : starting_point,
+            end : ending_point
+          },
+          success: function(response){
+            $(".load-image").append(response);
+          }
+        });
+      }
+      //load image on scroll
+      $(window).scroll(function(){
+        var scroll_top = $(window).scrollTop();
+        var browser_height = $(window).height();
+        var max_height = scroll_top+browser_height;
+        var webpage_height = $(document).height();
+
+        if(max_height >= webpage_height-10)
+        {
+          starting_point = starting_point+ending_point;
+          load(starting_point, ending_point);
+        }
+
+      });
     });
     </script>
   </body>

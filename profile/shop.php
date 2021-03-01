@@ -1,5 +1,5 @@
 <?php
-require("../php/database.php");
+require "../php/database.php";
 session_start();
 $username = $_SESSION['username'];
 if (empty($_SESSION['username'])) {
@@ -27,13 +27,13 @@ $starter = '<ul class="list-group w-100">
 </li>
 <li class="list-group-item bg-light text-center buy-btn" amount="99" plan="starter" storage="1024" style="cursor:pointer">
 <h4><i class="fa fa-inr"></i>99.00/monthly</h4>
-  
+
 </li>
 </ul>';
 
 $exclusive = '<ul class="list-group w-100">
 <li class="list-group-item bg-success">
-  <h3 class="text-center text-white">EXCLUSIVE PLANS</h3> 
+  <h3 class="text-center text-white">EXCLUSIVE PLANS</h3>
 </li>
 <li class="list-group-item">
   <h3 class="text-center">UNLIMITED STORAGE</h3>
@@ -52,7 +52,7 @@ $exclusive = '<ul class="list-group w-100">
 </li>
 <li class="list-group-item bg-light text-center buy-btn" amount="500" plan="exclusive" storage="unlimited" style="cursor:pointer">
 <h4><i class="fa fa-inr"></i>500.00/monthly</h4>
-  
+
 </li>
 </ul>';
 
@@ -60,7 +60,6 @@ $get_plans = "SELECT  plans FROM users WHERE username = '$username'";
 $response = $db->query($get_plans);
 $data = $response->fetch_assoc();
 $plans = $data['plans'];
- 
 
 ?>
 
@@ -104,41 +103,36 @@ $_SESSION['buyer_name'] = $email;
             <div class="row">
               <div class="col-md-6 p-5">
               <?php
-                    if($plans == "free")
-                    {
-                      echo $starter;
-                    }
-                    else if($plans == "starter")
-                    {
-                      echo "<button class='btn btn-light shadow-lg p-5'>You are currently using starter plan</button>";
-                    }
-                    ?>
+if ($plans == "free") {
+    echo $starter;
+} else if ($plans == "starter") {
+    echo "<button class='btn btn-light shadow-lg p-5'>You are currently using starter plan</button>";
+}
+?>
               </div>
 
 
               <div class="col-md-6 p-5">
               <?php
-                    if($plans == "free" || $plans == "starter")
-                    {
-                      echo $exclusive;
-                    }
-                    ?>
+if ($plans == "free" || $plans == "starter") {
+    echo $exclusive;
+}
+?>
               </div>
             </div>
             <div class="row">
                 <div class="col-md-12 p-5 text-center">
                       <?php
-                          if($plans == "exclusive")
-                          {
-                            echo "<button class='btn btn-light shadow-lg p-5'>
+if ($plans == "exclusive") {
+    echo "<button class='btn btn-light shadow-lg p-5'>
                               <h1>
                                 YOU are using our most expensive plan
                               </h1>
-                            
-                            </button>";
-                          }
 
-                      ?>   
+                            </button>";
+}
+
+?>
                  </div>
             </div>
         </div>

@@ -57,13 +57,11 @@ $data = $response->fetch_assoc();
 $total = $data['storage'];
 $used = $data['used_storage'];
 $plans = $data['plans'];
-if($plans == "starter")
-{
-  $free_space = $total - $used;
-echo "FREE SPACE : " . $free_space . " MB";
-}
-else{
-  echo "FREE SPACE : UNLIMITED" ;
+if ($plans == "starter" || $plans == "free") {
+    $free_space = $total - $used;
+    echo "FREE SPACE : " . $free_space . " MB";
+} else {
+    echo "FREE SPACE : UNLIMITED";
 }
 
 ?>
@@ -89,22 +87,20 @@ $data = $response->fetch_assoc();
 $total = $data['storage'];
 $used = $data['used_storage'];
 $plans = $data['plans'];
-if($plans == "starter" || $plans == "free")
-{
-  $display = "d-block";
-  echo $used . "MB/" . $total . "MB";
-$percentage = round(($used * 100) / $total, 2);
-$color = "";
-if ($percentage > 80) {
-    $color = "bg-danger";
+if ($plans == "starter" || $plans == "free") {
+    $display = "d-block";
+    echo $used . "MB/" . $total . "MB";
+    $percentage = round(($used * 100) / $total, 2);
+    $color = "";
+    if ($percentage > 80) {
+        $color = "bg-danger";
+    } else {
+        $color = "bg-primary";
+    }
 } else {
-    $color = "bg-primary";
-}
-}
-else{
     $display = "d-none";
-    echo "used storage : ".$used."MB";
-  
+    echo "used storage : " . $used . "MB";
+
 }
 
 ?>
@@ -112,9 +108,9 @@ else{
                                                 <div class="progress w-50 my-2 <?php echo $display ?>" style="height:10px">
                                                           <div class="progress-bar memory-progress <?php echo $color ?>" style="width: <?php
 echo $percentage, '%';
-?>"> 
+?>">
 <?php
-    echo $percentage;
+echo $percentage;
 ?>
 
  </div>
@@ -158,7 +154,7 @@ if ($response) {
 
               <div>
 
-              
+
 
             </div>
 
@@ -176,7 +172,7 @@ if ($response) {
 
               <div>
 
-              
+
 
             </div>
 
@@ -202,58 +198,48 @@ $response = $db->query($get_expiry_date);
 $data = $response->fetch_assoc();
 
 $plans = $data['plans'];
-if($plans != "free"){
-$expiry_date = $data['expiry_date'];
+if ($plans != "free") {
+    $expiry_date = $data['expiry_date'];
 
-$cal_date = new DateTime($expiry_date);
-$cal_date->sub(new DateInterval('P5D'));
-$five_date_before = $cal_date->format('Y-m-d H:i:s');
+    $cal_date = new DateTime($expiry_date);
+    $cal_date->sub(new DateInterval('P5D'));
+    $five_date_before = $cal_date->format('Y-m-d H:i:s');
 
-if($current_date == $five_date_before)
-{
-  echo "<div class='alert alert-warning rounded-0 shadow-lg fixed-top py-3'><i class='fa fa-times-circle close' data-dismiss='alert'></i><b>You have only 5 days left to renew your plan.</b></div>";
-}
-else if($current_date > $five_date_before)
-{
-   $manual_expiry_date = $date_create($expiry_date); 
-   $manual_current_date = $date_create($current_date); 
+    if ($current_date == $five_date_before) {
+        echo "<div class='alert alert-warning rounded-0 shadow-lg fixed-top py-3'><i class='fa fa-times-circle close' data-dismiss='alert'></i><b>You have only 5 days left to renew your plan.</b></div>";
+    } else if ($current_date > $five_date_before) {
+        $manual_expiry_date = $date_create($expiry_date);
+        $manual_current_date = $date_create($current_date);
 
-  $date_diff = date_diff($manual_current_date,$manual_expiry_date);
-  $left_days = $date_diff->format('%a');
-  echo "<div class='alert alert-warning rounded-0 shadow-lg fixed-top py-3'><i class='fa fa-times-circle close' data-dismiss='alert'></i><b>You have only ".$left_days." days left to renew your plan.</b></div>";
-  if($current_date>=$expiry_date)
-  {
-    $amount;
-    $storage;
-    if($plans == "starter")
-    {
-      $amount = 99;
-      $storage = 1024;
-    }
-    else{
-      $amount = 500;
-      $storage = 'unlimited';
-    }
-    $renew_link = "php/payment.php?amount=".$amount."&plans=".$plans."&storage=".$storage;
-    $_SESSION['renew'] = 'yes';
-    $_SESSION['buyer_name'] = $data['full_name'];
-    echo "<div class='d-flex alert alert-warning rounded-0 shadow-lg fixed-top py-3'>
+        $date_diff = date_diff($manual_current_date, $manual_expiry_date);
+        $left_days = $date_diff->format('%a');
+        echo "<div class='alert alert-warning rounded-0 shadow-lg fixed-top py-3'><i class='fa fa-times-circle close' data-dismiss='alert'></i><b>You have only " . $left_days . " days left to renew your plan.</b></div>";
+        if ($current_date >= $expiry_date) {
+            $amount;
+            $storage;
+            if ($plans == "starter") {
+                $amount = 99;
+                $storage = 1024;
+            } else {
+                $amount = 500;
+                $storage = 'unlimited';
+            }
+            $renew_link = "php/payment.php?amount=" . $amount . "&plans=" . $plans . "&storage=" . $storage;
+            $_SESSION['renew'] = 'yes';
+            $_SESSION['buyer_name'] = $data['full_name'];
+            echo "<div class='d-flex alert alert-warning rounded-0 shadow-lg fixed-top py-3'>
       <h4 class='flex-fill '>plan expire chose an action</h4>
-      <a href='".$renew_link."' class='btn btn-primary mx-3'>Renew old product</a>
+      <a href='" . $renew_link . "' class='btn btn-primary mx-3'>Renew old product</a>
       <a href='shop.php' class='btn btn-primary mr-3 shadow-sm'>Purchase new plan</a>
       <a href='php/logout.php' class='btn btn-light shadow-lg'>Log out</a>
     </div>";
 
-    echo "<style>
+            echo "<style>
       .upload-icon,.memory-link,.image-link{pointer-events:none}
     </style>";
-  }
+        }
+    }
+
 }
-
-
-
-} 
-
-
 
 ?>
